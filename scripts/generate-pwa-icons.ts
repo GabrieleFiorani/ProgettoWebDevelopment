@@ -4,10 +4,20 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const publicDir = join(dirname(fileURLToPath(import.meta.url)), '..', 'public')
-const INDIGO = [79, 70, 229]
-const WHITE = [255, 255, 255]
+const INDIGO = [79, 70, 229] as const
+const WHITE = [255, 255, 255] as const
 
-function crc32(buffer) {
+type Rgb = readonly [number, number, number]
+
+interface RoundedRect {
+  x: number
+  y: number
+  w: number
+  h: number
+  r: number
+}
+
+function crc32(buffer: Buffer): number {
   let crc = ~0
   for (const byte of buffer) {
     crc ^= byte
@@ -18,7 +28,7 @@ function crc32(buffer) {
   return ~crc >>> 0
 }
 
-function chunk(type, data) {
+function chunk(type: string, data: Buffer): Buffer {
   const typeBuf = Buffer.from(type)
   const length = Buffer.alloc(4)
   length.writeUInt32BE(data.length)
@@ -28,13 +38,13 @@ function chunk(type, data) {
   return Buffer.concat([length, typeBuf, data, crc])
 }
 
-function roundedRect(size, padding) {
+function roundedRect(size: number, padding: number): RoundedRect {
   const inner = size - padding * 2
   const radius = inner * 0.22
   return { x: padding, y: padding, w: inner, h: inner, r: radius }
 }
 
-function inRoundedRect(px, py, rect) {
+function inRoundedRect(px: number, py: number, rect: RoundedRect): boolean {
   const { x, y, w, h, r } = rect
   if (px < x || py < y || px >= x + w || py >= y + h) return false
   const lx = px - x
@@ -48,7 +58,7 @@ function inRoundedRect(px, py, rect) {
   return true
 }
 
-function inLetterW(px, py, size, pad) {
+function inLetterW(px: number, py: number, size: number, pad: number): boolean {
   const x0 = pad + size * 0.22
   const x1 = pad + size * 0.78
   const y0 = pad + size * 0.28
@@ -73,7 +83,7 @@ function inLetterW(px, py, size, pad) {
   return dist <= stroke / 2 && px >= x0 - stroke && px <= x1 + stroke
 }
 
-function makePng(size, { padding }) {
+function makePng(size: number, { padding }: { padding: number }): Buffer {
   const rect = roundedRect(size, padding)
   const letterPad = padding
   const raw = Buffer.alloc(size * (1 + size * 3))
@@ -83,7 +93,7 @@ function makePng(size, { padding }) {
     raw[row] = 0
     for (let x = 0; x < size; x += 1) {
       const i = row + 1 + x * 3
-      let color = [15, 23, 42]
+      let color: Rgb = [15, 23, 42]
       if (inRoundedRect(x + 0.5, y + 0.5, rect)) color = INDIGO
       if (inLetterW(x + 0.5, y + 0.5, size, letterPad)) color = WHITE
       raw[i] = color[0]
@@ -107,7 +117,7 @@ function makePng(size, { padding }) {
   ])
 }
 
-const icons = [
+const icons: Array<[string, number, number]> = [
   ['pwa-192x192.png', 192, 12],
   ['pwa-512x512.png', 512, 32],
   ['pwa-maskable-512x512.png', 512, 90],

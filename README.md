@@ -1,6 +1,6 @@
 # Progetto Web Dev
 
-React + Vite + Tailwind CSS v4 + PWA.
+React + TypeScript + Vite + Tailwind CSS v4 + PWA.
 
 ## Comandi
 
