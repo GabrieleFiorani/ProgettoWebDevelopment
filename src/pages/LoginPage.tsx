@@ -42,7 +42,8 @@ export function Login() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-900 px-4">
       <div className="max-w-md w-full bg-slate-800 p-6 rounded-2xl border border-slate-700 text-white space-y-4">
-        <h1 className="text-2xl font-bold text-emerald-400 text-center">FitTrack PWA</h1>
+        <h1 className="text-2xl font-bold text-emerald-400 text-center mb-0">FitTrack</h1>
+          <h2 className="text-md text-stone-200 text-center mb-4">Monitora i tuoi allenamenti</h2>
         <p className="text-sm text-slate-400 text-center">
           {isRegistering ? "Crea account" : "Accedi al tuo account"}
         </p>
@@ -68,7 +69,7 @@ export function Login() {
           />
           <button
             type="submit"
-            className="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-2.5 rounded-lg text-sm transition"
+            className="w-full bg-emerald-500 cursor-pointer hover:bg-emerald-600 text-slate-950 font-bold py-2.5 rounded-lg text-sm transition"
           >
             {isRegistering ? "Registrati" : "Accedi"}
           </button>
@@ -77,7 +78,7 @@ export function Login() {
         <button
           type="button"
           onClick={handleGoogle}
-          className="w-full bg-white text-slate-900 font-semibold py-2.5 rounded-lg text-sm hover:bg-slate-100 transition"
+          className="w-full bg-white cursor-pointer text-slate-900 font-semibold py-2.5 rounded-lg text-sm hover:bg-slate-100 transition"
         >
           Continua con Google
         </button>
@@ -86,7 +87,7 @@ export function Login() {
           <button
             type="button"
             onClick={() => setIsRegistering(!isRegistering)}
-            className="text-xs text-slate-400 hover:text-emerald-400 transition"
+            className="text-xs cursor-pointer text-slate-400 hover:text-emerald-400 transition"
           >
             {isRegistering ? "Hai un account? Accedi" : "Nuovo qui? Registrati"}
           </button>
