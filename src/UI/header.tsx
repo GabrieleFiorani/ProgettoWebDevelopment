@@ -1,7 +1,7 @@
 // Header.tsx
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { LogOut, User, BicepsFlexed, Menu } from 'lucide-react';
+import { LogOut, User, CakeSlice, Menu } from 'lucide-react';
 import { Sidebar } from './sidebar';
 
 export const Header: React.FC = () => {
@@ -28,9 +28,9 @@ export const Header: React.FC = () => {
         <div className="max-w-5xl mx-auto flex items-center justify-between">
           
           <div className="flex items-center gap-2">
-            <BicepsFlexed className="w-6 h-6 text-emerald-400" />
+            <CakeSlice className="w-6 h-6 text-emerald-400" />
             <span className="text-xl font-black tracking-tight text-emerald-400">
-              FitTrack
+              PantryZero
             </span>
           </div>
 
