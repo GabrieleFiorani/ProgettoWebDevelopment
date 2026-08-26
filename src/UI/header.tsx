@@ -1,26 +1,11 @@
-// Header.tsx
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { LogOut, User, CakeSlice, Menu } from 'lucide-react';
 import { Sidebar } from './sidebar';
 
-export const Header: React.FC = () => {
+export function Header() {
   const { user, logout } = useAuth();
-  const [isOnline, setIsOnline] = useState<boolean>(navigator.onLine);
-  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
-
-  useEffect(() => {
-    const handleOnline = () => setIsOnline(true);
-    const handleOffline = () => setIsOnline(false);
-
-    window.addEventListener('online', handleOnline);
-    window.addEventListener('offline', handleOffline);
-
-    return () => {
-      window.removeEventListener('online', handleOnline);
-      window.removeEventListener('offline', handleOffline);
-    };
-  }, []);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
     <>
@@ -69,4 +54,4 @@ export const Header: React.FC = () => {
       <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
     </>
   );
-};
+}
